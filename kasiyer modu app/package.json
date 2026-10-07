@@ -1,0 +1,43 @@
+{
+  "name": "kahvebahane-kasiyer",
+  "version": "1.0.0",
+  "description": "Kahvebahane Kasiyer Modu - masaustu uygulamasi",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.kahvebahane.kasiyer",
+    "productName": "Kahvebahane Kasiyer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "kahvebahane-server.json",
+      "package.json",
+      "renderer/**/*"
+    ],
+    "win": {
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "renderer/img/logo.png"
+    },
+    "portable": {
+      "artifactName": "Kahvebahane-Kasiyer-Portable.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}

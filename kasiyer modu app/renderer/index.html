@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kahvebahane Kasiyer</title>
+  <link rel="icon" type="image/png" href="./img/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="./img/logo2.png" alt="Kahvebahane" class="brand-logo logo-theme-dark" />
+        <img src="./img/logo.png" alt="Kahvebahane" class="brand-logo logo-theme-light" />
+        <span class="brand-name">Kahvebahane Kasiyer</span>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" title="Tema değiştir" aria-label="Tema değiştir">
+          <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button id="langToggle" class="icon-btn lang-btn" title="Dil değiştir">EN</button>
+        <button id="notifBtn" class="icon-btn" title="Bildirimler" aria-label="Bildirimler" style="position:relative">🔔<span id="notifBadge" class="notif-badge hidden">0</span></button>
+        <button id="menuBtn" class="icon-btn hamburger" title="Menü" aria-label="Menü">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav id="sideNav" class="side-nav">
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="nav-drawer">
+      <div class="nav-header">
+        <span data-i18n="nav.menu">Menü</span>
+        <button id="navClose" class="icon-btn">✕</button>
+      </div>
+      <ul class="nav-list">
+        <li><button data-mode-target="customer" class="nav-item active"><span>🪑</span> <span data-i18n="nav.customer">Müşteri Modu</span></button></li>
+        <li><button data-mode-target="cashier" class="nav-item"><span>💰</span> <span data-i18n="nav.cashier">Kasiyer Modu</span></button></li>
+        <li><button data-mode-target="admin" class="nav-item"><span>⚙️</span> <span data-i18n="nav.admin">Admin Modu</span></button></li>
+      </ul>
+      <div id="navUserInfo" class="nav-user"></div>
+      <button id="navLogoutBtn" class="nav-item nav-logout hidden"><span>🚪</span> <span data-i18n="nav.logout">Çıkış Yap</span></button>
+    </div>
+  </nav>
+
+  <main id="app">
+    <div id="view-customer" class="view active">
+      <div class="customer-hero">
+        <img src="./img/logo2.png" alt="Kahvebahane" class="hero-logo logo-theme-dark" />
+        <img src="./img/logo.png" alt="Kahvebahane" class="hero-logo logo-theme-light" />
+        <h1 data-i18n="customer.welcome">Kahvebahane'ye Hoş Geldiniz</h1>
+        <p data-i18n="customer.subtitle">QR kodunuzu tarayarak menüden sipariş verebilirsiniz.</p>
+        <div id="tableBadge" class="table-badge hidden"></div>
+        <div id="tableInputArea" class="table-input-area"></div>
+      </div>
+
+      <div class="customer-layout">
+        <section class="menu-section">
+          <div class="search-row">
+            <input id="searchInput" class="search-input" placeholder="🔍 Ürün ara..." />
+            <div class="filter-chips" id="filterChips"></div>
+          </div>
+          <div class="category-tabs" id="categoryTabs"></div>
+          <div class="product-grid" id="productGrid"></div>
+        </section>
+
+        <div class="cart-column">
+          <aside class="cart-panel" id="cartPanel">
+            <div class="cart-header">
+              <h2>🛒 <span data-i18n="cart.title">Sepetim</span></h2>
+              <button id="clearCart" class="text-btn" data-i18n="cart.clear">Temizle</button>
+            </div>
+            <div class="people-area">
+              <div class="people-header">
+                <span data-i18n="people.title">Masadaki İsimler</span>
+                <div class="people-add-row">
+                  <input id="personInput" class="person-input" placeholder="👤 + İsim Ekle..." maxlength="20" />
+                  <button id="addPersonBtn" class="mini-btn">+</button>
+                </div>
+              </div>
+              <div id="peopleChips" class="people-chips"></div>
+              <div class="people-hint" data-i18n="people.hint">Ürünleri sürükleyip kişinin altına bırakın</div>
+            </div>
+            <div id="cartAssign" class="cart-assign"></div>
+            <div class="cart-summary">
+              <div class="cart-total-row"><span data-i18n="cart.subtotal">Ara Toplam</span><span id="subtotal">0₺</span></div>
+              <div class="cart-total-row total"><span data-i18n="cart.total">Toplam</span><span id="total">0₺</span></div>
+              <textarea id="orderNote" class="order-note" placeholder='Notunuz...' rows="2"></textarea>
+              <button id="createOrderBtn" class="btn btn-primary btn-block" data-i18n="cart.createOrder">Siparişi Gönder</button>
+            </div>
+          </aside>
+
+          <div id="customerOrdersPanel" class="orders-panel hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-cashier" class="view"></div>
+
+    <div id="view-admin" class="view"></div>
+  </main>
+
+  <footer class="site-footer">
+    made by Ada Şakir 2026 &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/adasakirr" target="_blank" rel="noopener">📷 @adasakirr</a>
+    &nbsp;·&nbsp; İletişim: 0543 308 33 55
+  </footer>
+
+  <div id="authModal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="authTitle" data-i18n="auth.title">Giriş Yap</h2>
+        <button class="icon-btn" onclick="closeAuth()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="authError" class="auth-error hidden"></div>
+        <label class="field">
+          <span data-i18n="auth.username">Kullanıcı Adı</span>
+          <input type="text" id="authUsername" />
+        </label>
+        <label class="field">
+          <span data-i18n="auth.password">Şifre</span>
+          <input type="password" id="authPassword" />
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-block" onclick="submitAuth()" data-i18n="auth.login">Giriş Yap</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="manageModal" class="modal hidden">
+    <div class="modal-box" id="manageModalContent" style="max-width:560px"></div>
+  </div>
+
+  <div id="paymentModal" class="modal hidden">
+    <div class="modal-box" style="max-width:420px">
+      <div class="modal-header">
+        <h2 id="paymentTitle">💳 Ödeme</h2>
+        <button class="icon-btn" onclick="closePaymentModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="paymentInfo" class="payment-info"></div>
+        <div class="payment-options" id="paymentOptions">
+          <label class="pay-opt active"><input type="radio" name="payMethod" value="cash" checked /><span>💵 <span data-i18n="pay.cash">Nakit</span></span></label>
+          <label class="pay-opt"><input type="radio" name="payMethod" value="card" /><span>💳 <span data-i18n="pay.card">Kart</span></span></label>
+        </div>
+        <div class="disc-area" style="margin-bottom:12px">
+          <div style="display:flex;gap:8px">
+            <select id="discType" onchange="updatePaymentTotal()" style="padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit">
+              <option value="percent">🏷️ %</option>
+              <option value="amount">🏷️ ₺</option>
+            </select>
+            <input id="discValue" type="number" min="0" placeholder="İndirim" oninput="updatePaymentTotal()" style="flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit" />
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <button class="mini-btn" onclick="setDisc(0)">0</button>
+            <button class="mini-btn" onclick="setDisc(5)">%5</button>
+            <button class="mini-btn" onclick="setDisc(10)">%10</button>
+            <button class="mini-btn" onclick="setDisc(20)">%20</button>
+            <button class="mini-btn" onclick="setDisc(100)">🎁 İkram</button>
+          </div>
+        </div>
+        <div id="paymentTotal" class="payment-total"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closePaymentModal()" data-i18n="admin.cancel">İptal</button>
+        <button class="btn btn-success" id="paymentConfirmBtn">✅ <span data-i18n="pay.confirm">Ödemeyi Tamamla</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="receiptModal" class="modal hidden">
+    <div class="modal-box" id="receiptModalContent" style="max-width:440px;padding:14px"></div>
+  </div>
+
+  <div id="cropModal" class="modal hidden">
+    <div class="modal-box" style="max-width:520px">
+      <div class="modal-header">
+        <h2>✂️ <span data-i18n="crop.title">Fotoğrafı Düzenle</span></h2>
+        <button class="icon-btn" onclick="closeCrop()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="crop-stage" id="cropStage" onpointerdown="cropStart(event)" onpointermove="cropMove(event)" onpointerup="cropEnd()" onpointerleave="cropEnd()">
+          <img id="cropImg" alt="" draggable="false" />
+          <div class="crop-frame"></div>
+        </div>
+        <div class="crop-controls">
+          <span class="zoom-ico">&minus;</span>
+          <input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1" oninput="onCropZoom()" />
+          <span class="zoom-ico">+</span>
+        </div>
+        <p class="crop-hint"><span data-i18n="crop.hint">Sürükleyerek taşı, oku büyüt/küçült</span></p>
+        <div class="crop-preview">
+          <div class="cp-tag" data-i18n="crop.preview">Menüde böyle görünecek:</div>
+          <div class="cp-card"><img id="cropPrevThumb" alt="" /><div class="cp-name">Ürün</div></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeCrop()"><span data-i18n="admin.cancel">İptal</span></button>
+        <button class="btn btn-primary" onclick="applyCrop()">✅ <span data-i18n="crop.apply">Kırp ve Onayla</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="logoutModal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>🚪 <span data-i18n="nav.logoutTitle">Çıkış Yap</span></h2>
+        <button class="icon-btn" onclick="closeLogout()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="logoutMsg" style="margin-bottom:16px">...</p>
+      </div>
+      <div class="modal-footer" style="display:flex;gap:10px">
+        <button class="btn btn-secondary" onclick="closeLogout()" data-i18n="admin.cancel">İptal</button>
+        <button class="btn btn-danger" onclick="confirmLogout()" data-i18n="nav.logoutConfirm">Çıkış Yap</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="notifModal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>🔔 <span>Bildirimler</span></h2>
+        <button class="icon-btn" onclick="closeNotifs()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="notifList"></div>
+      </div>
+      <div class="modal-footer" style="display:flex;gap:10px">
+        <button class="btn btn-secondary" id="notifClearBtn" style="margin:0">🗑 Temizle</button>
+        <button class="btn btn-primary" style="margin:0" onclick="closeNotifs()">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="./js/menu.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/help-view.js"></script>
+  <script src="./js/help-cashier.js"></script>
+  <script src="./js/desktop-config.js"></script>
+</body>
+</html>
